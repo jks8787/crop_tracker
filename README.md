@@ -30,3 +30,6 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 9. adding code to `bin/crop_tracker` to call the new code in `crop_tracker.rb`
 9. `rake install`
 10. `crop_tracker`, and the output should be `my output!`
+11. add a Crop class, which will serve as my 'record'
+12. add an InputParser class, which will contain the work of parsing
+13. add tests for the classes and the intro message

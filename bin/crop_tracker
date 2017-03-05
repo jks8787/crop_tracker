@@ -1,5 +1,57 @@
 #!/usr/bin/env ruby
 require "crop_tracker"
+require "pry"
 
-ct = CropTracker::Instruct.new
-ct.initial_instruction
+processor =
+  CropTracker::CropHandler.new(file_name: "data_file.csv")
+
+entered_ARGV = ARGV.length > 0;
+
+if entered_ARGV
+  entered_info = ARGV
+  possible_cmd = "#{ARGV[0]} #{ARGV[1]}".downcase
+else
+  possible_cmd = 'none'
+end
+
+if ["add crop", "add amt", "subtract amt"].any? { |cmd| possible_cmd.include?(cmd) }
+  # entered info is passed to the CropHandler
+  processor.parse_info(entered_info)
+  processor.write_to_data_store
+  processor.print_summary_of_data
+elsif possible_cmd.include?("summary")
+  # this was added in the case you want to just print the summary
+  processor.print_summary_of_data
+elsif possible_cmd.include?("clear")
+  # this was added for convience if you want to start fresh
+  processor.clear_data
+elsif possible_cmd.include?("help")
+  ct = CropTracker::Instruct.new
+  ct.initial_instruction
+  puts "you can use the commands 'add crop', 'add amt', or 'subtract amt' followed by a name and an amount ( formatted like '10oz')"
+  puts "you can also used 'summary' to output what you have entered or 'clear' to start fresh"
+elsif possible_cmd == 'none'
+  ct = CropTracker::Instruct.new
+  ct.initial_instruction
+  puts "try using 'help'"
+else
+  # now assume that it is not a command and use it as a file_name
+  if entered_ARGV
+    file_name = ARGV[0]
+    if File.exist?(file_name)
+      File.open(file_name) do |f|
+        f.each_line { |line| processor.parse_info(line) }
+      end
+      processor.write_to_data_store
+      processor.print_summary_of_data
+    else
+      puts 'that file does not exist'
+    end
+  else
+    ARGF.each do |line|
+      processor.parse_info(line)
+    end
+    processor.write_to_data_store
+    processor.print_summary_of_data
+  end
+end

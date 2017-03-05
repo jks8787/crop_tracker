@@ -1,0 +1,6 @@
+add crop kale 24oz
+add crop carrots 24oz
+add amt kale 12oz
+add amt carrots 16oz
+subtract amt kale 10oz
+subtract amt carrots 6oz

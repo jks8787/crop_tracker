@@ -33,3 +33,6 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 11. add a Crop class, which will serve as my 'record'
 12. add an InputParser class, which will contain the work of parsing
 13. add tests for the classes and the intro message
+14. add a CropHandler to the main module to use both the InputParser and Crop class
+15. add handling of input to `bin\crop_tracker` and use of the new CropHandler
+16. add tests for updated functionality, and new class

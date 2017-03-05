@@ -8,12 +8,12 @@ class InputParser
 
   def entered_name
     # the name will be always the second item
-    line_data_array[1]
+    line_data_array[2].downcase
   end
 
   def command_type
-    # the command_type will be always the first item
-    line_data_array[0].downcase
+    # the command_type will be always the first two items
+    "#{line_data_array[0]} #{line_data_array[1]}".downcase
   end
 
   def amount
